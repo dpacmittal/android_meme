@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(:version => 20110325170545) do
     t.string   "meme_type"
     t.string   "first_line"
     t.string   "second_line"
+    t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

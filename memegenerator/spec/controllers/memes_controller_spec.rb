@@ -6,6 +6,16 @@ require 'spec_helper'
 
 describe MemesController do
 
+  MEME1 = { "meme_type" => "Y_U_NO", "first_line" => "write tests?" }
+
+  describe "POST create" do
+    it "creates a new meme" do
+      Meme.should_receive(:new).with(MEME1)
+      post :create, :meme => MEME1
+    end
+  end
+
+
   def mock_meme(stubs={})
     @mock_meme ||= mock_model(Meme, stubs).as_null_object
   end
@@ -15,30 +25,6 @@ describe MemesController do
       Meme.stub(:all) { [mock_meme] }
       get :index
       assigns(:memes).should eq([mock_meme])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested meme as @meme" do
-      Meme.stub(:find).with("37") { mock_meme }
-      get :show, :id => "37"
-      assigns(:meme).should be(mock_meme)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new meme as @meme" do
-      Meme.stub(:new) { mock_meme }
-      get :new
-      assigns(:meme).should be(mock_meme)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested meme as @meme" do
-      Meme.stub(:find).with("37") { mock_meme }
-      get :edit, :id => "37"
-      assigns(:meme).should be(mock_meme)
     end
   end
 
@@ -69,56 +55,6 @@ describe MemesController do
         post :create, :meme => {}
         response.should render_template("new")
       end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested meme" do
-        Meme.stub(:find).with("37") { mock_meme }
-        mock_meme.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :meme => {'these' => 'params'}
-      end
-
-      it "assigns the requested meme as @meme" do
-        Meme.stub(:find) { mock_meme(:update_attributes => true) }
-        put :update, :id => "1"
-        assigns(:meme).should be(mock_meme)
-      end
-
-      it "redirects to the meme" do
-        Meme.stub(:find) { mock_meme(:update_attributes => true) }
-        put :update, :id => "1"
-        response.should redirect_to(meme_url(mock_meme))
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the meme as @meme" do
-        Meme.stub(:find) { mock_meme(:update_attributes => false) }
-        put :update, :id => "1"
-        assigns(:meme).should be(mock_meme)
-      end
-
-      it "re-renders the 'edit' template" do
-        Meme.stub(:find) { mock_meme(:update_attributes => false) }
-        put :update, :id => "1"
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested meme" do
-      Meme.stub(:find).with("37") { mock_meme }
-      mock_meme.should_receive(:destroy)
-      delete :destroy, :id => "37"
-    end
-
-    it "redirects to the memes list" do
-      Meme.stub(:find) { mock_meme }
-      delete :destroy, :id => "1"
-      response.should redirect_to(memes_url)
     end
   end
 

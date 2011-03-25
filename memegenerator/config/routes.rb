@@ -1,5 +1,8 @@
 Memegenerator::Application.routes.draw do
+
   resources :memes
+
+  root :to => "memes#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,27 +1,16 @@
-<h1>Listing memes</h1>
-
 <table>
-  <tr>
-    <th>Meme type</th>
-    <th>First line</th>
-    <th>Second line</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
 <% @memes.each do |meme| %>
   <tr>
-    <td><%= meme.meme_type %></td>
-    <td><%= meme.first_line %></td>
-    <td><%= meme.second_line %></td>
-    <td><%= link_to 'Show', meme %></td>
-    <td><%= link_to 'Edit', edit_meme_path(meme) %></td>
-    <td><%= link_to 'Destroy', meme, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+      <img src='<%= meme.image_url %>'/>
+    </td>
+    <td>
+      Meme Type: <%= meme.meme_type.gsub('_', ' ') %>
+      <br />
+      <%= meme.first_line %>
+      <br />
+      <%= meme.second_line %>
+    </td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Meme', new_meme_path %>

@@ -4,6 +4,7 @@ class CreateMemes < ActiveRecord::Migration
       t.string :meme_type
       t.string :first_line
       t.string :second_line
+      t.string :image_url
 
       t.timestamps
     end
