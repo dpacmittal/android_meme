@@ -11,4 +11,5 @@ group :development, :test do
   gem 'capybara'
   gem 'heroku'
   gem 'steak'
+  gem 'heroku'
 end
