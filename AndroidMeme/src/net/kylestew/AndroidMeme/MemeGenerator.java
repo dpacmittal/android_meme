@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+
 public class MemeGenerator extends Activity {
 
 	public final static String SERVER = "http://10.0.2.2:3000"; // emulator localhost
