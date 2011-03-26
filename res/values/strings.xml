@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Android Meme Generator</string>
+    <string name="meme_prompt">Select a Meme</string>
+    
+</resources>
