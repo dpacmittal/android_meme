@@ -8,15 +8,13 @@ class MemesController < ApplicationController
   end
 
   def create
-#    @meme = Meme.new(params[:meme])
-#
-#    respond_to do |format|
-#      if @meme.save
-#        format.json  { render :json => @meme, :status => :created }
-#      else
-#        format.json  { render :json => @meme.errors, :status => :unprocessable_entity }
-#      end
-#    end
+    @meme = Meme.new(params[:meme])
+
+    if @meme.save
+      render :json => @meme, :status => :created
+    else
+      render :json => @meme.errors, :status => :unprocessable_entity
+    end
   end
 
 end

@@ -6,56 +6,38 @@ require 'spec_helper'
 
 describe MemesController do
 
-  MEME1 = { "meme_type" => "Y_U_NO", "first_line" => "write tests?" }
-
   describe "POST create" do
-    it "creates a new meme" do
-      Meme.should_receive(:new).with(MEME1)
-      post :create, :meme => MEME1
-    end
-  end
-
-
-  def mock_meme(stubs={})
-    @mock_meme ||= mock_model(Meme, stubs).as_null_object
-  end
-
-  describe "GET index" do
-    it "assigns all memes as @memes" do
-      Meme.stub(:all) { [mock_meme] }
-      get :index
-      assigns(:memes).should eq([mock_meme])
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "assigns a newly created meme as @meme" do
-        Meme.stub(:new).with({'these' => 'params'}) { mock_meme(:save => true) }
-        post :create, :meme => {'these' => 'params'}
-        assigns(:meme).should be(mock_meme)
+    describe "request with proper attributes" do
+      before(:each) do
+        params = { :meme => { :meme_type => "Y_U_NO", :first_line => "first", :second_line => "second" } }
+        post :create, params.merge(:format => :json)
+        @response_body = JSON.parse response.body
       end
 
-      it "redirects to the created meme" do
-        Meme.stub(:new) { mock_meme(:save => true) }
-        post :create, :meme => {}
-        response.should redirect_to(meme_url(mock_meme))
+      it "Should return 201 created" do
+        response.code.should == "201"
+      end
+
+      it "Should create a meme" do
+        Meme.count.should == 1
+      end
+
+      it "Should return proper image url" do
+        image_url = @response_body["meme"]["image_url"]
+        image_url.should be
+        image_url.match(/first-second.jpg/).should be
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved meme as @meme" do
-        Meme.stub(:new).with({'these' => 'params'}) { mock_meme(:save => false) }
-        post :create, :meme => {'these' => 'params'}
-        assigns(:meme).should be(mock_meme)
+    describe "not enough attributes" do
+      before(:each) do
+        post :create, { :format => :json }
+        @response_body = JSON.parse response.body
       end
 
-      it "re-renders the 'new' template" do
-        Meme.stub(:new) { mock_meme(:save => false) }
-        post :create, :meme => {}
-        response.should render_template("new")
+      it "Should return failed status code" do
+        response.code.should == "422"
       end
     end
   end
-
 end

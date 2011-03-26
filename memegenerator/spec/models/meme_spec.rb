@@ -12,21 +12,22 @@ describe Meme do
       @meme.errors[:meme_type][0].should == "can't be blank"
     end
 
-    it "Should require a first line" do
+    it "Should fail if a bad meme type is used" do
+      @meme.meme_type = "INVALID"
+      @meme.first_line = "first"
+      @meme.second_line = "second"
       @meme.save
-      @meme.errors[:first_line][0].should == "can't be blank"
+      @meme.errors[:meme_type][0].should == "Invalid meme type"
     end
 
     it "Should generate a image url when created" do
-      debugger
-      @meme = Meme.create(:meme_type => "Y_U_NO", :first_line => "first line")
-
-#http://images1.memegenerator.net/ImageMacro/6532110/Y-U-NO-dsfa.jpg?imageSize=Medium&generatorName=Y-U-NO
-      
-    end
-
-    it "Should fail on multi-line memes with only one line provided" do
-
+      @meme.meme_type = "Y_U_NO"
+      @meme.first_line = "first"
+      @meme.second_line = "second"
+      @meme.save
+      @meme.image_url.should be
+      @meme.image_url.match(/memegenerator.net/).should be
+      @meme.image_url.match(/first-second.jpg/).should be
     end
   end
 

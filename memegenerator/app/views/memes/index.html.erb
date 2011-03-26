@@ -1,3 +1,5 @@
+<h2>Meme Count: <%= @memes.count %></h2>
+
 <table>
 <% @memes.each do |meme| %>
   <tr>
@@ -5,11 +7,22 @@
       <img src='<%= meme.image_url %>'/>
     </td>
     <td>
-      Meme Type: <%= meme.meme_type.gsub('_', ' ') %>
-      <br />
-      <%= meme.first_line %>
-      <br />
-      <%= meme.second_line %>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+    </td>
+    <td>
+      <h3>
+        <b>Meme Type: <%= meme.meme_type.gsub('_', ' ') %></b>
+        <br />
+        <br />
+        <%= meme.first_line %>
+        <br />
+        <%= meme.second_line %>
+      </h3>
     </td>
   </tr>
 <% end %>
