@@ -15,6 +15,9 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -26,7 +29,8 @@ import android.widget.Spinner;
 
 public class MemeGenerator extends Activity {
 
-	public final static String SERVER = "http://10.0.2.2:3000"; // emulator localhost
+	public final static String SERVER = "http://memegen.heroku.com"; // remember the 'http'
+	
 	private Spinner memeType;
 	private EditText firstLine;
 	private EditText secondLine;
@@ -54,7 +58,7 @@ public class MemeGenerator extends Activity {
 		memeType.setAdapter(adapter);
 	}
 
-	private void showMeme(String imageUrl) {
+	private void showMeme(final String memeType, final String imageUrl) {
 		// Inflate layout we are going to use for the dialog
 		View view = getLayoutInflater().inflate(R.layout.meme_view, null);
 
@@ -72,7 +76,18 @@ public class MemeGenerator extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Your New Meme");
 		builder.setView(view);
-		builder.setPositiveButton("Awesome!", null);
+		builder.setNeutralButton("Awesome!", null);
+		builder.setPositiveButton("Share", new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_SUBJECT, memeType);
+				intent.putExtra(Intent.EXTRA_TEXT, memeType + "\n" + imageUrl);
+				startActivity(Intent.createChooser(intent, "Share your meme"));
+			}
+		});
 		builder.show();
 	}
 
@@ -102,7 +117,8 @@ public class MemeGenerator extends Activity {
 							jsonObject = jsonObject.optJSONObject("meme");
 							if (jsonObject != null) {
 								String imageUrl = jsonObject.optString("image_url");
-								showMeme(imageUrl);
+								String memeType = jsonObject.optString("meme_type").replace("_", " ");
+								showMeme(memeType, imageUrl);
 							}
 						}
 					}

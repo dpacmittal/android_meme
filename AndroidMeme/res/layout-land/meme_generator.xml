@@ -9,17 +9,14 @@
 		android:id="@+id/memeType"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="12dip"
-		android:layout_marginRight="12dip"
-		android:layout_marginBottom="12dip"
-		android:layout_marginTop="24dip"
+		android:layout_margin="8dip"
 		android:prompt="@string/meme_prompt" />
 		
 	<EditText
 		android:id="@+id/firstLine"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="12dip"
+		android:layout_margin="8dip"
 		android:inputType="text"
 		android:imeOptions="actionNext"
 		android:hint="First Line" />
@@ -28,7 +25,7 @@
 		android:id="@+id/secondLine"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="12dip"
+		android:layout_margin="8dip"
 		android:inputType="text"
 		android:imeOptions="actionDone"
 		android:hint="Second Line" />
@@ -37,7 +34,7 @@
 		android:onClick="generate"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
-		android:layout_margin="22dip"
+		android:layout_margin="8dip"
 		android:textSize="18sp"
 		android:textStyle="bold"
 		android:text="Generate Meme" />
