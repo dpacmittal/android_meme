@@ -70,8 +70,6 @@ public class MemeGenerator extends Activity {
 		BitmapDownloaderTask task = new BitmapDownloaderTask(memeImage, progressBar);
 		task.execute(imageUrl);
 		
-		memeImage.setImageResource(R.drawable.icon);
-
 		// Build the alert dialog with our view
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Your New Meme");
@@ -84,7 +82,8 @@ public class MemeGenerator extends Activity {
 				Intent intent = new Intent(Intent.ACTION_SEND);
 				intent.setType("text/plain");
 				intent.putExtra(Intent.EXTRA_SUBJECT, memeType);
-				intent.putExtra(Intent.EXTRA_TEXT, memeType + "\n" + imageUrl);
+				String url = imageUrl.substring(0, imageUrl.lastIndexOf("?"));
+				intent.putExtra(Intent.EXTRA_TEXT, url);
 				startActivity(Intent.createChooser(intent, "Share your meme"));
 			}
 		});
